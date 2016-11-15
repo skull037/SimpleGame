@@ -1,7 +1,10 @@
+//player's location
 var PlayerX = Number(document.getElementById("Player").getAttribute("x"));
 var PlayerY = Number(document.getElementById("Player").getAttribute("y"));
 
-
+//food eaten which is the score and the score element
+var FoodEaten = 0
+var ScoreText = document.getElementById("score")
 document.addEventListener("keydown", function(e) {
   var apple1X=Number(document.getElementById("apple1").getAttribute("x"));
   var apple1y=Number(document.getElementById("apple1").getAttribute("y"));
@@ -29,12 +32,18 @@ document.addEventListener("keydown", function(e) {
 //checks players location against apple's location
   if(PlayerX >= apple1X-15 && PlayerX <= apple1X+15 && PlayerY >= apple1y-15 && PlayerY <= apple1y+15 ){
     document.getElementById("apple1").setAttribute("x",NumGen(75, 425));
+EatApple();
   }
   else if(PlayerX >= apple2X-15 && PlayerX <= apple2X+15 && PlayerY >= apple2y-15 && PlayerY <= apple2y+15 ){
     document.getElementById("apple2").setAttribute("x",NumGen(75, 425));
+  EatApple();
   }
 });
 //random number generator
 function NumGen(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+function EatApple(){
+  FoodEaten++
+  score.textContent = "SCORE:" + FoodEaten;
 }
