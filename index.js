@@ -27,10 +27,14 @@ document.addEventListener("keydown", function(e) {
  document.getElementById("Player").setAttribute("y", PlayerY)
   }
 //checks players location against apple's location
-  if(PlayerX >= apple1X-10 && PlayerX <= apple1X+10 && PlayerY >= apple1y-10 && PlayerY <= apple1y+10 ){
-    document.getElementById("apple1").setAttribute("x",600);
+  if(PlayerX >= apple1X-15 && PlayerX <= apple1X+15 && PlayerY >= apple1y-15 && PlayerY <= apple1y+15 ){
+    document.getElementById("apple1").setAttribute("x",NumGen(75, 425));
   }
-  else if(PlayerX >= apple2X-10 && PlayerX <= apple2X+10 && PlayerY >= apple2y-10 && PlayerY <= apple2y+10 ){
-    document.getElementById("apple2").setAttribute("x",600);
+  else if(PlayerX >= apple2X-15 && PlayerX <= apple2X+15 && PlayerY >= apple2y-15 && PlayerY <= apple2y+15 ){
+    document.getElementById("apple2").setAttribute("x",NumGen(75, 425));
   }
 });
+//random number generator
+function NumGen(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
