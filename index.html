@@ -5,7 +5,7 @@
   </head>
   <body>
   <svg id="canvas" width="100%" length ="100%" viewBox="0 0 400 180" style="background: #5aa;">
-
+<g id="game">
         <image id="apple1" x="50" y="30" width="10" height="10" xlink:href="images/Apple.png">
         <animate attributeName="y" from="0" to="200" dur="2s"repeatCount="indefinite"/>
       </image>
@@ -14,6 +14,14 @@
               </image>
 <image id="Player" x="175" y="20" width="25" height="25" xlink:href="images/Player.gif"/>
     <text id="score" x="325" y="25" font-family="arial" font-size="10">SCORE: 0</text>
+        <text id="hunger" x="325" y="75" font-family="arial" font-size="10">HUNGER: 100</text>
+      </g>
+      <g id="gameover">
+          <text id="gameoverscore" x="175" y="50" font-family="arial" font-size="10">SCORE: 0</text>
+          <text id="SurTime" x="175" y="75" font-family="arial" font-size="10">YOU SURVIVED FOR X UNTIS</text>
+          <text id="restartbutton" x="175" y="100" font-family="arial" font-size="10">RESTART</text>
+          <button>retry</button>
+            </g>
   </svg>
   </body>
    <script src="index.js"></script>

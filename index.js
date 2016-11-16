@@ -1,10 +1,17 @@
+//sets gameover screen invisable
+  document.getElementById("gameover").style.visibility = "hidden";
 //player's location
 var PlayerX = Number(document.getElementById("Player").getAttribute("x"));
 var PlayerY = Number(document.getElementById("Player").getAttribute("y"));
 
-//food eaten which is the score and the score element
+//time at game start
+var timeStart = Date.now()
+//food eaten which is the score and the score element and hunger and its element
 var FoodEaten = 0
-var ScoreText = document.getElementById("score")
+var ScoreText = document.getElementById("score");
+var Hunger = 100;
+var HungerText = document.getElementById("hunger");
+
 document.addEventListener("keydown", function(e) {
   var apple1X=Number(document.getElementById("apple1").getAttribute("x"));
   var apple1y=Number(document.getElementById("apple1").getAttribute("y"));
@@ -13,30 +20,41 @@ document.addEventListener("keydown", function(e) {
   if(e.keyCode == 37 || e.keyCode == 65){
     PlayerX -=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
-
+ Hunger--
   }
   else if(e.keyCode == 39|| e.keyCode == 68){
     PlayerX +=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
+ Hunger--
 
   }
   if(e.keyCode == 40 || e.keyCode == 83){
     PlayerY +=10;
  document.getElementById("Player").setAttribute("y", PlayerY)
+  Hunger--
 
   }
   else if(e.keyCode == 38|| e.keyCode == 87){
     PlayerY -=10;
  document.getElementById("Player").setAttribute("y", PlayerY)
+  Hunger--
   }
+    HungerText.textContent = "HUNGER:" + Hunger;
 //checks players location against apple's location
   if(PlayerX >= apple1X-15 && PlayerX <= apple1X+15 && PlayerY >= apple1y-15 && PlayerY <= apple1y+15 ){
-    document.getElementById("apple1").setAttribute("x",NumGen(75, 425));
+    document.getElementById("apple1").setAttribute("x",NumGen(75, 400));
 EatApple();
   }
   else if(PlayerX >= apple2X-15 && PlayerX <= apple2X+15 && PlayerY >= apple2y-15 && PlayerY <= apple2y+15 ){
-    document.getElementById("apple2").setAttribute("x",NumGen(75, 425));
+    document.getElementById("apple2").setAttribute("x",NumGen(75, 400));
   EatApple();
+  }
+  if(Hunger <= 0){
+    var timeStop = Date.now()
+      SurTime.textContent = "YOU SURVIVED FOR "+ Math.round((timeStop - timeStart)/360) +" SECONDS" ;
+  document.getElementById("game").style.visibility = "hidden";
+    document.getElementById("gameover").style.visibility = "visible";
+      gameoverscore.textContent = score.textContent;
   }
 });
 //random number generator
@@ -46,4 +64,8 @@ function NumGen(min, max) {
 function EatApple(){
   FoodEaten++
   score.textContent = "SCORE:" + FoodEaten;
+  Hunger += 10;
+  if(Hunger > 100){
+    Hunger = 100
+  }
 }
