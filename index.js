@@ -15,6 +15,8 @@ var apple1Speed = 2;
 var apple2Speed = 2;
 //checks if the game is active
 var Gamebool = true;
+//score based on moves
+var MoveScore =0;
 document.addEventListener("keydown", function(e) {
   if(Gamebool == true){
     //apple's location
@@ -29,23 +31,26 @@ document.addEventListener("keydown", function(e) {
     PlayerX -=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
  Health--
+ MoveScore++
   }
   else if(e.keyCode == 39|| e.keyCode == 68){
     PlayerX +=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
  Health--
+ MoveScore++
 
   }
   if(e.keyCode == 40 || e.keyCode == 83){
     PlayerY +=10;
  document.getElementById("Player").setAttribute("y", PlayerY)
   Health--
-
+MoveScore++
   }
   else if(e.keyCode == 38|| e.keyCode == 87){
     PlayerY -=10;
  document.getElementById("Player").setAttribute("y", PlayerY)
   Health--
+  MoveScore++
   }
   //moves player to other side of board if they go over
   if(PlayerX <= -15){
@@ -73,20 +78,19 @@ EatApple();
   EatApple();
   }
   //checks if player hits the enemy
-  if(PlayerX >= EnemyX-20 && PlayerX <= EnemyX+20 && PlayerY >= EnemyY-20 && PlayerY <= EnemyY+20 ){
+  if(PlayerX >= EnemyX-15 && PlayerX <= EnemyX+15 && PlayerY >= EnemyY-15 && PlayerY <= EnemyY+15 ){
     Health -= 20;
-    document.getElementById("apple1").setAttribute("x",NumGen(75, 390));
-    document.getElementById("apple1Ani").setAttribute("dur",apple1Speed);
-EatApple();
   }
+  //gameover
   if(Health <= 0){
     var timeStop = Date.now()
       SurTime.textContent = "YOU SURVIVED FOR "+ Math.round((timeStop - timeStart)/360) +" SECONDS" ;
   document.getElementById("game").style.visibility = "hidden";
     document.getElementById("gameover").style.visibility = "visible";
-      gameoverscore.textContent = "FINAL SCORE: " + (FoodEaten + Math.round(((timeStop - timeStart)/360)/2));
+      gameoverscore.textContent = "FINAL SCORE: " + (FoodEaten + MoveScore);
       Gamebool = false;
   }
+    score.textContent = "SCORE:" + (FoodEaten+MoveScore);
 }
 });
 //random number generator
@@ -94,10 +98,11 @@ function NumGen(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 function EatApple(){
-  FoodEaten++
-  score.textContent = "SCORE:" + FoodEaten;
+  FoodEaten+=10
+  score.textContent = "SCORE:" + (FoodEaten+MoveScore);
   Health += 10;
   if(Health > 100){
     Health = 100
   }
 }
+setInterval(function(){  document.getElementById("Enemy").setAttribute("y",NumGen(0, 160));}, 10000);
