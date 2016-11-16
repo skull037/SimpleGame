@@ -47,14 +47,14 @@ document.addEventListener("keydown", function(e) {
     HungerText.textContent = "HUNGER:" + Hunger;
 //checks players location against apple's location
   if(PlayerX >= apple1X-15 && PlayerX <= apple1X+15 && PlayerY >= apple1y-15 && PlayerY <= apple1y+15 ){
-    apple1Speed -= 0.1;
-    document.getElementById("apple1").setAttribute("x",NumGen(75, 400));
+    apple1Speed *= 0.9;
+    document.getElementById("apple1").setAttribute("x",NumGen(75, 390));
     document.getElementById("apple1Ani").setAttribute("dur",apple1Speed);
 EatApple();
   }
   else if(PlayerX >= apple2X-15 && PlayerX <= apple2X+15 && PlayerY >= apple2y-15 && PlayerY <= apple2y+15 ){
-    apple2Speed -= 0.1;
-    document.getElementById("apple2").setAttribute("x",NumGen(75, 400));
+    apple2Speed *= 0.9;
+    document.getElementById("apple2").setAttribute("x",NumGen(75, 390));
         document.getElementById("apple2Ani").setAttribute("dur",apple2Speed);
   EatApple();
   }
@@ -63,7 +63,7 @@ EatApple();
       SurTime.textContent = "YOU SURVIVED FOR "+ Math.round((timeStop - timeStart)/360) +" SECONDS" ;
   document.getElementById("game").style.visibility = "hidden";
     document.getElementById("gameover").style.visibility = "visible";
-      gameoverscore.textContent = score.textContent;
+      gameoverscore.textContent = "FINAL SCORE: " + (FoodEaten + Math.round(((timeStop - timeStart)/360)/2));
       Gamebool = false;
   }
 }
