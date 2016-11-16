@@ -11,8 +11,13 @@ var FoodEaten = 0
 var ScoreText = document.getElementById("score");
 var Hunger = 100;
 var HungerText = document.getElementById("hunger");
-
+//apple speeds
+var apple1Speed = 2;
+var apple2Speed = 2;
+//checks if the game is active
+var Gamebool = true;
 document.addEventListener("keydown", function(e) {
+  if(Gamebool == true){
   var apple1X=Number(document.getElementById("apple1").getAttribute("x"));
   var apple1y=Number(document.getElementById("apple1").getAttribute("y"));
   var apple2X=Number(document.getElementById("apple2").getAttribute("x"));
@@ -42,11 +47,15 @@ document.addEventListener("keydown", function(e) {
     HungerText.textContent = "HUNGER:" + Hunger;
 //checks players location against apple's location
   if(PlayerX >= apple1X-15 && PlayerX <= apple1X+15 && PlayerY >= apple1y-15 && PlayerY <= apple1y+15 ){
+    apple1Speed -= 0.1;
     document.getElementById("apple1").setAttribute("x",NumGen(75, 400));
+    document.getElementById("apple1Ani").setAttribute("dur",apple1Speed);
 EatApple();
   }
   else if(PlayerX >= apple2X-15 && PlayerX <= apple2X+15 && PlayerY >= apple2y-15 && PlayerY <= apple2y+15 ){
+    apple2Speed -= 0.1;
     document.getElementById("apple2").setAttribute("x",NumGen(75, 400));
+        document.getElementById("apple2Ani").setAttribute("dur",apple2Speed);
   EatApple();
   }
   if(Hunger <= 0){
@@ -55,7 +64,9 @@ EatApple();
   document.getElementById("game").style.visibility = "hidden";
     document.getElementById("gameover").style.visibility = "visible";
       gameoverscore.textContent = score.textContent;
+      Gamebool = false;
   }
+}
 });
 //random number generator
 function NumGen(min, max) {
