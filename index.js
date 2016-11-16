@@ -44,15 +44,22 @@ document.addEventListener("keydown", function(e) {
  document.getElementById("Player").setAttribute("y", PlayerY)
   Hunger--
   }
+  //moves player to other side of board if they go over
+  if(PlayerX <= -15){
+ PlayerX = 385;
+  }
+  else if(PlayerX >= 395){
+PlayerX = -15;
+  }
     HungerText.textContent = "HUNGER:" + Hunger;
 //checks players location against apple's location
-  if(PlayerX >= apple1X-15 && PlayerX <= apple1X+15 && PlayerY >= apple1y-15 && PlayerY <= apple1y+15 ){
+  if(PlayerX >= apple1X-20 && PlayerX <= apple1X+20 && PlayerY >= apple1y-20 && PlayerY <= apple1y+20 ){
     apple1Speed *= 0.9;
     document.getElementById("apple1").setAttribute("x",NumGen(75, 390));
     document.getElementById("apple1Ani").setAttribute("dur",apple1Speed);
 EatApple();
   }
-  else if(PlayerX >= apple2X-15 && PlayerX <= apple2X+15 && PlayerY >= apple2y-15 && PlayerY <= apple2y+15 ){
+  else if(PlayerX >= apple2X-20 && PlayerX <= apple2X+20 && PlayerY >= apple2y-20 && PlayerY <= apple2y+20 ){
     apple2Speed *= 0.9;
     document.getElementById("apple2").setAttribute("x",NumGen(75, 390));
         document.getElementById("apple2Ani").setAttribute("dur",apple2Speed);
