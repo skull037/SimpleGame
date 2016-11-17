@@ -30,40 +30,41 @@ document.addEventListener("keydown", function(e) {
   if(e.keyCode == 37 || e.keyCode == 65){
     PlayerX -=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
- Health--
- MoveScore++
+PlayerMove();
   }
   else if(e.keyCode == 39|| e.keyCode == 68){
     PlayerX +=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
- Health--
- MoveScore++
+PlayerMove();
 
   }
   if(e.keyCode == 40 || e.keyCode == 83){
     PlayerY +=10;
  document.getElementById("Player").setAttribute("y", PlayerY)
-  Health--
-MoveScore++
+PlayerMove();
   }
   else if(e.keyCode == 38|| e.keyCode == 87){
     PlayerY -=10;
  document.getElementById("Player").setAttribute("y", PlayerY)
-  Health--
-  MoveScore++
+PlayerMove();
   }
   //moves player to other side of board if they go over
   if(PlayerX <= -15){
  PlayerX = 385;
   }
-  else if(PlayerX >= 395){
+  else if(PlayerX >= 385){
 PlayerX = -15;
+  }
+  if(PlayerY <= -15){
+ PlayerY = 160;
+  }
+  else if(PlayerY >= 160){
+PlayerY = 0;
   }
   //moves enemy to another y axis when it crosses the border
   if(EnemyX >= 375){
   document.getElementById("Enemy").setAttribute("y",NumGen(0, 160));
   }
-    HealthText.textContent = "Health:" + Health;
 //checks players location against apple's location
   if(PlayerX >= apple1X-20 && PlayerX <= apple1X+20 && PlayerY >= apple1y-20 && PlayerY <= apple1y+20 ){
     apple1Speed *= 0.9;
@@ -93,6 +94,10 @@ EatApple();
     score.textContent = "SCORE:" + (FoodEaten+MoveScore);
 }
 });
+document.addEventListener("keyup", function(e) {
+document.getElementById("Player").setAttribute("xlink:href","images/Player-Idle.png")
+});
+
 //random number generator
 function NumGen(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -105,4 +110,10 @@ function EatApple(){
     Health = 100
   }
 }
+function PlayerMove(){
+      document.getElementById("Player").setAttribute("xlink:href","images/Player.gif");
+  Health--
+  MoveScore++
+}
 setInterval(function(){  document.getElementById("Enemy").setAttribute("y",NumGen(0, 160));}, 10000);
+setInterval(function(){  HealthText.textContent = "Health:" + Health;}, 10);
