@@ -60,20 +60,20 @@ PlayerX = -15;
  PlayerY = 160;
   }
   else if(PlayerY >= 160){
-PlayerY = 0;
+PlayerY = -15;
   }
   //moves enemy to another y axis when it crosses the border
   if(EnemyX >= 375){
   document.getElementById("Enemy").setAttribute("y",NumGen(0, 160));
   }
 //checks players location against apple's location
-  if(PlayerX >= apple1X-20 && PlayerX <= apple1X+20 && PlayerY >= apple1y-20 && PlayerY <= apple1y+20 ){
+  if(PlayerX >= apple1X-30 && PlayerX <= apple1X+30 && PlayerY >= apple1y-30 && PlayerY <= apple1y+30 ){
     apple1Speed *= 0.9;
     document.getElementById("apple1").setAttribute("x",NumGen(75, 390));
     document.getElementById("apple1Ani").setAttribute("dur",apple1Speed);
 EatApple();
   }
-  else if(PlayerX >= apple2X-20 && PlayerX <= apple2X+20 && PlayerY >= apple2y-20 && PlayerY <= apple2y+20 ){
+  else if(PlayerX >= apple2X-30 && PlayerX <= apple2X+30 && PlayerY >= apple2y-30 && PlayerY <= apple2y+30 ){
     apple2Speed *= 0.9;
     document.getElementById("apple2").setAttribute("x",NumGen(75, 390));
         document.getElementById("apple2Ani").setAttribute("dur",apple2Speed);
@@ -81,12 +81,13 @@ EatApple();
   }
   //checks if player hits the enemy
   if(PlayerX >= EnemyX-15 && PlayerX <= EnemyX+15 && PlayerY >= EnemyY-15 && PlayerY <= EnemyY+15 ){
+    document.getElementById("Player").setAttribute("xlink:href","images/Enemy.gif")
     Health -= 20;
   }
   //gameover
   if(Health <= 0){
     var timeStop = Date.now()
-      SurTime.textContent = "YOU SURVIVED FOR "+ Math.round((timeStop - timeStart)/360) +" SECONDS" ;
+      SurTime.textContent = "YOU SURVIVED FOR "+ Math.round((timeStop - timeStart)/1000) +" SECONDS" ;
   document.getElementById("game").style.visibility = "hidden";
     document.getElementById("gameover").style.visibility = "visible";
       gameoverscore.textContent = "FINAL SCORE: " + (FoodEaten + MoveScore);
@@ -94,9 +95,6 @@ EatApple();
   }
     score.textContent = "SCORE:" + (FoodEaten+MoveScore);
 }
-});
-document.addEventListener("keyup", function(e) {
-document.getElementById("Player").setAttribute("xlink:href","images/Player-Idle.png")
 });
 
 //random number generator
@@ -107,6 +105,7 @@ function EatApple(){
   FoodEaten+=10
   score.textContent = "SCORE:" + (FoodEaten+MoveScore);
   Health += 10;
+  //prevents overheal
   if(Health > 100){
     Health = 100
   }
@@ -116,5 +115,7 @@ function PlayerMove(){
   Health--
   MoveScore++
 }
+//moves enemy after it finsihes its move animation
 setInterval(function(){ document.getElementById("Enemy").setAttribute("y",PlayerY)},10000);
+//updates health text
 setInterval(function(){  HealthText.textContent = "Health:" + Health;}, 10);
