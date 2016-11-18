@@ -10,9 +10,10 @@ var FoodEaten = 0
 var ScoreText = document.getElementById("score");
 var Health = 100;
 var HealthText = document.getElementById("Health");
-//apple speeds
+//apple & enemy speeds
 var apple1Speed = 2;
 var apple2Speed = 2;
+var EnemySpeed = 10;
 //checks if the game is active
 var Gamebool = true;
 //score based on moves
@@ -115,5 +116,5 @@ function PlayerMove(){
   Health--
   MoveScore++
 }
-setInterval(function(){  document.getElementById("Enemy").setAttribute("y",NumGen(0, 160));}, 10000);
+setInterval(function(){ document.getElementById("Enemy").setAttribute("y",PlayerY)},10000);
 setInterval(function(){  HealthText.textContent = "Health:" + Health;}, 10);
