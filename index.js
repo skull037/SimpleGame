@@ -6,7 +6,7 @@ var PlayerY = Number(document.getElementById("Player").getAttribute("y"));
 //time at game start
 var timeStart = Date.now()
 //food eaten which is the score and the score element and Health and its element
-var FoodEaten = 0
+var FoodEaten = 0;
 var ScoreText = document.getElementById("score");
 var Health = 100;
 var HealthText = document.getElementById("Health");
@@ -28,6 +28,9 @@ document.addEventListener("keydown", function(e) {
   //Enemy's location
   var EnemyX = Number(document.getElementById("Enemy").getAttribute("x"));
   var EnemyY = Number(document.getElementById("Enemy").getAttribute("y"));
+  //Box's location
+  var BoxX = Number(document.getElementById("box").getAttribute("x"));
+  var BoxY = Number(document.getElementById("box").getAttribute("y"));
   if(e.keyCode == 37 || e.keyCode == 65){
     PlayerX -=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
@@ -37,7 +40,6 @@ PlayerMove();
     PlayerX +=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
 PlayerMove();
-
   }
   if(e.keyCode == 40 || e.keyCode == 83){
     PlayerY +=10;
@@ -84,6 +86,10 @@ EatApple();
     document.getElementById("Player").setAttribute("xlink:href","images/Enemy.gif")
     Health -= 20;
   }
+  //checks if player hits the box
+  if(PlayerX >= BoxX-20 && PlayerX <= BoxX+20 && PlayerY >= BoxY-20 && PlayerY <= BoxY+20 ){
+ console.log("boop");
+  }
   //gameover
   if(Health <= 0){
     var timeStop = Date.now()
@@ -92,9 +98,17 @@ EatApple();
     document.getElementById("gameover").style.visibility = "visible";
       gameoverscore.textContent = "FINAL SCORE: " + (FoodEaten + MoveScore);
       Gamebool = false;
+//HighScore logic
+          if ( (FoodEaten+MoveScore) > localStorage.getItem('highScoreStored') ) {
+              localStorage.setItem('highScoreStored', (FoodEaten+MoveScore) );
+                    HighScore.textContent = "NEW HIGHSCORE: " + (FoodEaten + MoveScore);
+          }
+          else {
+            HighScore.textContent = "HIGHSCORE: " + localStorage.getItem('highScoreStored');
+          }
+      }
   }
     score.textContent = "SCORE:" + (FoodEaten+MoveScore);
-}
 });
 
 //random number generator
@@ -116,6 +130,6 @@ function PlayerMove(){
   MoveScore++
 }
 //moves enemy after it finsihes its move animation
-setInterval(function(){ document.getElementById("Enemy").setAttribute("y",PlayerY)},10000);
+setInterval(function(){ document.getElementById("Enemy").setAttribute("y",PlayerY)},5000);
 //updates health text
 setInterval(function(){  HealthText.textContent = "Health:" + Health;}, 10);
