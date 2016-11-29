@@ -4,11 +4,11 @@
     <title>Game</title>
   </head>
   <body>
-    Use Arrow keys or WASD to play. Collect falling apples and avoid the Ghost who attacks when you move onto it.
-  <svg id="canvas" width="100%" length ="100%" viewBox="0 0 400 180" style="background: #5aa;">
+    Use Arrow keys or WASD to play. Collect falling red apples and avoid the Ghost along with green apples which deal damage when you move onto them.
+  <svg id="canvas" width="100%" length ="100%" viewBox="0 0 400 180" style="background: #bdd;">
 <g id="game">
-          <image id="box" x="100" y="30" width="30" height="30" xlink:href="images/box.png"/>
-          
+          <image id="BadApple" x="100" y="10" width="30" height="10" xlink:href="images/badapple.png"/>
+
         <image id="apple1" x="50" y="30" width="10" height="10" xlink:href="images/Apple.png">
         <animate  id="apple1Ani"attributeName="y" from="0" to="200" dur="2s"repeatCount="indefinite"/>
       </image>

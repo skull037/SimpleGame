@@ -1,5 +1,8 @@
 //sets gameover screen invisable
   document.getElementById("gameover").style.visibility = "hidden";
+  //randomizes the green apple
+  document.getElementById("BadApple").setAttribute("x",NumGen(75, 390));
+      document.getElementById("BadApple").setAttribute("y",NumGen(75, 160));
 //player's location
 var PlayerX = Number(document.getElementById("Player").getAttribute("x"));
 var PlayerY = Number(document.getElementById("Player").getAttribute("y"));
@@ -28,9 +31,9 @@ document.addEventListener("keydown", function(e) {
   //Enemy's location
   var EnemyX = Number(document.getElementById("Enemy").getAttribute("x"));
   var EnemyY = Number(document.getElementById("Enemy").getAttribute("y"));
-  //Box's location
-  var BoxX = Number(document.getElementById("box").getAttribute("x"));
-  var BoxY = Number(document.getElementById("box").getAttribute("y"));
+  //green apple's location
+  var GappleX=Number(document.getElementById("BadApple").getAttribute("x"));
+  var GappleY=Number(document.getElementById("BadApple").getAttribute("y"));
   if(e.keyCode == 37 || e.keyCode == 65){
     PlayerX -=10;
  document.getElementById("Player").setAttribute("x", PlayerX)
@@ -69,13 +72,13 @@ PlayerY = -15;
   document.getElementById("Enemy").setAttribute("y",NumGen(0, 160));
   }
 //checks players location against apple's location
-  if(PlayerX >= apple1X-30 && PlayerX <= apple1X+30 && PlayerY >= apple1y-30 && PlayerY <= apple1y+30 ){
+  if(PlayerX >= apple1X-20 && PlayerX <= apple1X+20 && PlayerY >= apple1y-20 && PlayerY <= apple1y+20 ){
     apple1Speed *= 0.9;
     document.getElementById("apple1").setAttribute("x",NumGen(75, 390));
     document.getElementById("apple1Ani").setAttribute("dur",apple1Speed);
 EatApple();
   }
-  else if(PlayerX >= apple2X-30 && PlayerX <= apple2X+30 && PlayerY >= apple2y-30 && PlayerY <= apple2y+30 ){
+  else if(PlayerX >= apple2X-20 && PlayerX <= apple2X+20 && PlayerY >= apple2y-20 && PlayerY <= apple2y+20 ){
     apple2Speed *= 0.9;
     document.getElementById("apple2").setAttribute("x",NumGen(75, 390));
         document.getElementById("apple2Ani").setAttribute("dur",apple2Speed);
@@ -86,9 +89,12 @@ EatApple();
     document.getElementById("Player").setAttribute("xlink:href","images/Enemy.gif")
     Health -= 20;
   }
-  //checks if player hits the box
-  if(PlayerX >= BoxX-20 && PlayerX <= BoxX+20 && PlayerY >= BoxY-20 && PlayerY <= BoxY+20 ){
- console.log("boop");
+  //checks if player hits the green apple
+  if(PlayerX >= GappleX-10 && PlayerX <= GappleX+10 && PlayerY >= GappleY-10 && PlayerY <= GappleY+10 ){
+    document.getElementById("Player").setAttribute("xlink:href","images/Enemy.gif")
+        document.getElementById("BadApple").setAttribute("x",NumGen(75, 390));
+            document.getElementById("BadApple").setAttribute("y",NumGen(75, 160));
+    Health -= 10;
   }
   //gameover
   if(Health <= 0){
