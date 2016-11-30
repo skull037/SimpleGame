@@ -3,6 +3,8 @@
   //randomizes the green apple
   document.getElementById("BadApple").setAttribute("x",NumGen(75, 390));
       document.getElementById("BadApple").setAttribute("y",NumGen(75, 160));
+      //puts high score
+          HighScoreA.textContent = "HIGHSCORE: " + localStorage.getItem('highScoreStored');
 //player's location
 var PlayerX = Number(document.getElementById("Player").getAttribute("x"));
 var PlayerY = Number(document.getElementById("Player").getAttribute("y"));
@@ -19,6 +21,8 @@ var apple2Speed = 2;
 var EnemySpeed = 10;
 //checks if the game is active
 var Gamebool = true;
+//PlayerAnimation state 0 is idle
+var PlayerAnimation = 0;
 //score based on moves
 var MoveScore =0;
 document.addEventListener("keydown", function(e) {
@@ -87,11 +91,13 @@ EatApple();
   //checks if player hits the enemy
   if(PlayerX >= EnemyX-15 && PlayerX <= EnemyX+15 && PlayerY >= EnemyY-15 && PlayerY <= EnemyY+15 ){
     document.getElementById("Player").setAttribute("xlink:href","images/Enemy.gif")
+        PlayerAnimation = 2;
     Health -= 20;
   }
   //checks if player hits the green apple
   if(PlayerX >= GappleX-10 && PlayerX <= GappleX+10 && PlayerY >= GappleY-10 && PlayerY <= GappleY+10 ){
     document.getElementById("Player").setAttribute("xlink:href","images/Enemy.gif")
+    PlayerAnimation = 2;
         document.getElementById("BadApple").setAttribute("x",NumGen(75, 390));
             document.getElementById("BadApple").setAttribute("y",NumGen(75, 160));
     Health -= 10;
@@ -129,13 +135,25 @@ function EatApple(){
   if(Health > 100){
     Health = 100
   }
+  //HighScore logic
+  if ( (FoodEaten+MoveScore) > localStorage.getItem('highScoreStored') ) {
+      localStorage.setItem('highScoreStored', (FoodEaten+MoveScore) );
+            HighScoreA.textContent = "NEW HIGHSCORE: " + (FoodEaten + MoveScore);
+  }
+  else {
+    HighScoreA.textContent = "HIGHSCORE: " + localStorage.getItem('highScoreStored');
+  }
 }
 function PlayerMove(){
+  if(PlayerAnimation != 1){
       document.getElementById("Player").setAttribute("xlink:href","images/Player.gif");
-  Health--
+      PlayerAnimation = 1;
+    }
+  //Health--
   MoveScore++
 }
 //moves enemy after it finsihes its move animation
 setInterval(function(){ document.getElementById("Enemy").setAttribute("y",PlayerY)},5000);
+setInterval(function(){ Health--},150);
 //updates health text
 setInterval(function(){  HealthText.textContent = "Health:" + Health;}, 10);
