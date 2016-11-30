@@ -1,5 +1,7 @@
-//sets gameover screen invisable
+//sets screens invisable
 document.getElementById("gameover").style.visibility = "hidden";
+document.getElementById("game").style.visibility = "hidden";
+document.getElementById("paused").style.visibility = "hidden";
 //randomizes the green apple
 document.getElementById("BadApple").setAttribute("x", NumGen(75, 390));
 document.getElementById("BadApple").setAttribute("y", NumGen(75, 160));
@@ -20,7 +22,7 @@ var apple1Speed = 2;
 var apple2Speed = 2;
 var EnemySpeed = 10;
 //checks if the game is active
-var Gamebool = true;
+var Gamebool = false;
 //PlayerAnimation state 0 is idle
 var PlayerAnimation = 0;
 //score based on moves
@@ -31,10 +33,10 @@ document.addEventListener("keydown", function(e) {
     //pause feature
     if (Gamebool == true && e.keyCode == 27) {
         Gamebool = false;
-        console.log("paused");
+        document.getElementById("paused").style.visibility = "visible";
     } else if (Gamebool == false && e.keyCode == 27) {
         Gamebool = true;
-        console.log("unpaused");
+        document.getElementById("paused").style.visibility = "hidden";
     }
     if (Gamebool) {
         //apple's location
@@ -147,6 +149,21 @@ function PlayerMove() {
     //Health--
     MoveScore++
 }
+function GameStart(Diff) {
+  difficulty = Diff;
+  document.getElementById("game").style.visibility = "visible";
+  document.getElementById("gamemenu").style.visibility = "hidden";
+  Gamebool = true;
+  console.log(difficulty);
+  setInterval(function() {
+      if(Gamebool == true){
+      Health--;
+    }
+      if (Health <= 0) {
+          GameOver();
+      }
+  }, difficulty);
+}
 
 function GameOver() {
     var timeStop = Date.now()
@@ -164,16 +181,30 @@ function GameOver() {
     }
     Health = Infinity;
 }
+function Restart(){
+  Health = 100;
+  FoodEaten = 0;
+  MoveScore = 0;
+  apple1Speed = 2;
+  apple2Speed = 2;
+  document.getElementById("apple2Ani").setAttribute("dur", apple2Speed);
+  document.getElementById("apple1Ani").setAttribute("dur", apple1Speed);
+  document.getElementById("apple2").setAttribute("x", 50);
+  document.getElementById("apple1").setAttribute("x", 300);
+PlayerX = 175;
+PlayerY = 20;
+document.getElementById("Player").setAttribute("y", PlayerY)
+document.getElementById("Player").setAttribute("x", PlayerX)
+document.getElementById("Player").setAttribute("xlink:href", "images/Player.gif");
+PlayerAnimation = 1;
+  document.getElementById("game").style.visibility = "visible";
+  document.getElementById("gameover").style.visibility = "hidden";
+  Gamebool = true;
+}
 //moves enemy after it finsihes its move animation
 setInterval(function() {
     document.getElementById("Enemy").setAttribute("y", PlayerY)
 }, 5000);
-setInterval(function() {
-    Health--;
-    if (Health <= 0 && Gamebool == true) {
-        GameOver();
-    }
-}, difficulty);
 //updates health text
 setInterval(function() {
     HealthText.textContent = "Health:" + Health;
