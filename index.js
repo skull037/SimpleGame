@@ -106,7 +106,7 @@ document.addEventListener("keydown", function(e) {
             Health -= 20;
         }
         //checks if player hits the green apple
-        if (PlayerX >= GappleX - 20 && PlayerX <= GappleX + 20 && PlayerY >= GappleY - 20 && PlayerY <= GappleY + 20) {
+        if (PlayerX >= GappleX - 15 && PlayerX <= GappleX + 15 && PlayerY >= GappleY - 20 && PlayerY <= GappleY + 20) {
             document.getElementById("Player").setAttribute("xlink:href", "images/Enemy.gif")
             PlayerAnimation = 2;
             document.getElementById("BadApple").setAttribute("x", NumGen(75, 390));
@@ -124,8 +124,13 @@ document.addEventListener("keydown", function(e) {
         localStorage.setItem('highScoreStored', (FoodEaten + MoveScore));
         HighScoreA.textContent = "NEW HIGHSCORE: " + (FoodEaten + MoveScore);
     } else {
-        HighScoreA.textContent = "HIGHSCORE: " + localStorage.getItem('highScoreStored');
+      if(localStorage.getItem('highScoreStored') == null){
+        HighScoreA.textContent = "HIGHSCORE: 0";
     }
+    else{
+      HighScoreA.textContent = "HIGHSCORE: " + localStorage.getItem('highScoreStored');
+  }
+  }
 });
 
 //random number generator
